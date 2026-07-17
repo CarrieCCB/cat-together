@@ -1,0 +1,25 @@
+{
+  "name": "online-cat",
+  "version": "1.0.0",
+  "description": "双人线上养小猫 - 点开即玩的实时协作养猫 Web 应用（Node.js + Express + Socket.io）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "cat",
+    "socket.io",
+    "express",
+    "realtime",
+    "game"
+  ],
+  "author": "邓可馨",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}
