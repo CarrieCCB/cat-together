@@ -184,217 +184,44 @@
        坐标基于 .cat 220x250 的相对定位
        ============================================================ */
     .cat { position: relative; width: 220px; height: 250px; }
+    .cat-svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
-    /* 尾巴（蓬松卷曲，空闲左右摆动） */
-    .tail {
-      position: absolute; z-index: 1;
-      width: 48px; height: 122px; right: -20px; bottom: 34px;
-      background: linear-gradient(200deg, #FFC85E 0%, #FF9E2C 55%, #FF840F 100%);
-      border-radius: 52% 52% 46% 54% / 62% 62% 40% 40%;
-      transform-origin: bottom center;
-      animation: tailSwing 1.8s ease-in-out infinite;
-      box-shadow: inset -5px 0 9px rgba(220,120,20,.24);
+    /* 尾巴摆动（蓬松卷曲） */
+    .cat-tail {
+      transform-box: fill-box; transform-origin: 24% 92%;
+      animation: tailSwing 1.9s ease-in-out infinite;
     }
-    .tail::before { /* 蓬松卷曲的尾巴尖 */
-      content: ""; position: absolute; top: -24px; left: -6px;
-      width: 58px; height: 58px; border-radius: 50%;
-      background: linear-gradient(160deg, #FFD37A, #FF9E2C);
-      box-shadow: inset -4px -4px 7px rgba(220,120,20,.2);
-    }
-    .tail::after { /* 尾巴细腻环纹 */
-      content: ""; position: absolute; top: 22px; left: 0; right: 0; height: 62px;
-      background: repeating-linear-gradient(180deg, transparent 0 17px, rgba(228,132,26,.38) 17px 23px);
-      border-radius: 40%;
-    }
-    @keyframes tailSwing { 0%,100% { transform: rotate(6deg); } 50% { transform: rotate(24deg); } }
+    @keyframes tailSwing { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(11deg); } }
 
-    /* 身体（圆滚滚小球） */
-    .body {
-      position: absolute; z-index: 2;
-      width: 162px; height: 134px; left: 29px; bottom: 0;
-      background: linear-gradient(160deg, #FFC85E 0%, #FF9E2C 58%, #FF840F 100%);
-      border-radius: 52% 52% 48% 48% / 60% 60% 40% 40%;
-      transform-origin: center bottom;
-      box-shadow: inset -8px -12px 22px rgba(220,120,20,.24), inset 8px 8px 16px rgba(255,230,172,.5);
-    }
-    /* 身体虎斑条纹（细腻） */
-    .bstripe { position: absolute; background: rgba(228,132,26,.4); border-radius: 6px; }
-    .bstripe.b1 { width: 32px; height: 7px; left: 20px; top: 30px; transform: rotate(18deg); }
-    .bstripe.b2 { width: 28px; height: 6px; left: 24px; top: 48px; transform: rotate(16deg); }
-    .bstripe.b3 { width: 32px; height: 7px; right: 20px; top: 30px; transform: rotate(-18deg); }
-    .bstripe.b4 { width: 28px; height: 6px; right: 24px; top: 48px; transform: rotate(-16deg); }
-    /* 白色肚皮 */
-    .belly {
-      position: absolute; z-index: 3;
-      width: 92px; height: 100px; left: 50%; transform: translateX(-50%); bottom: 4px;
-      background: linear-gradient(180deg, #FFF9F0, #FFEDD6);
-      border-radius: 50% 50% 48% 48%;
-    }
+    /* 头部（吃 / 蹭 动画的作用对象） */
+    .cat-head { transform-box: fill-box; transform-origin: center 90%; }
 
-    /* 前腿 + 白色爪子（小巧圆润） */
-    .leg {
-      position: absolute; z-index: 3; bottom: -2px;
-      width: 46px; height: 38px;
-      background: linear-gradient(180deg, #FFC85E, #FF9E2C);
-      border-radius: 46% 46% 48% 48%;
-    }
-    .leg.l { left: 42px; }
-    .leg.r { right: 42px; }
-    .leg::after {
-      content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 36px; height: 20px; background: #FFF9F0; border-radius: 50%;
-    }
+    /* 身体（睡觉呼吸起伏） */
+    .cat-body { transform-box: fill-box; transform-origin: center bottom; }
+    .cat.mood-sleep .cat-body { animation: breathe 3.2s ease-in-out infinite; }
+    @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
-    /* 头部（大而圆润，Q版） */
-    .head {
-      position: absolute; z-index: 4;
-      width: 198px; height: 184px; left: 11px; top: 2px;
-      background: linear-gradient(160deg, #FFD37A 0%, #FF9E2C 60%, #FF840F 100%);
-      border-radius: 50%;
-      transform-origin: center bottom;
-      box-shadow: inset -10px -8px 22px rgba(220,120,20,.2), inset 10px 8px 20px rgba(255,234,178,.5);
-    }
-    /* 耳朵（小巧三角尖耳，内耳粉色明显） */
-    .ear {
-      position: absolute; z-index: 3; top: -16px;
-      width: 54px; height: 56px;
-      background: linear-gradient(160deg, #FFD37A, #FF9E2C);
-      clip-path: polygon(50% 0, 100% 100%, 0 100%);
-      transition: transform .3s;
-    }
-    .ear.l { left: 16px; transform: rotate(-14deg); }
-    .ear.r { right: 16px; transform: rotate(14deg); }
-    .ear-inner {
-      position: absolute; left: 50%; transform: translateX(-50%); top: 20px;
-      width: 30px; height: 32px; background: #FF9EB5;
-      clip-path: polygon(50% 0, 100% 100%, 0 100%);
-    }
-    /* 头部虎斑（额头细纹） */
-    .hstripe { position: absolute; background: rgba(228,132,26,.48); border-radius: 5px; z-index: 1; }
-    .hstripe.h1 { width: 5px; height: 22px; left: 50%; transform: translateX(-50%); top: 10px; }
-    .hstripe.h2 { width: 5px; height: 20px; left: 76px; top: 14px; transform: rotate(20deg); }
-    .hstripe.h3 { width: 5px; height: 20px; right: 76px; top: 14px; transform: rotate(-20deg); }
+    /* 正常态：定时眨眼（眯眼） */
+    .eyes-open { transform-box: fill-box; transform-origin: center; }
+    .cat.mood-normal .eyes-open { animation: blink 4.6s ease-in-out infinite; }
+    @keyframes blink { 0%,90%,100% { transform: scaleY(1); } 94% { transform: scaleY(.12); } 97% { transform: scaleY(1); } }
 
-    /* 眼睛（又大又圆，深色瞳孔 + 明显高光） */
-    .eye {
-      position: absolute; z-index: 2; top: 64px;
-      width: 58px; height: 58px; background: #fff;
-      border-radius: 50%; overflow: hidden;
-      box-shadow: inset 0 -3px 6px rgba(0,0,0,.05);
-      transition: transform .3s, height .3s, background .3s;
-    }
-    .eye.l { left: 24px; }
-    .eye.r { right: 24px; }
-    .iris {
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-      width: 48px; height: 48px; border-radius: 50%;
-      background: radial-gradient(circle at 50% 38%, #b8712a 0%, #8a4f14 58%, #5c3208 100%);
-      transition: transform .3s, opacity .3s;
-    }
-    .pupil {
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-      width: 32px; height: 32px; border-radius: 50%; background: #241304;
-      transition: transform .3s, opacity .3s;
-    }
-    .hl { position: absolute; top: 9px; left: 11px; width: 17px; height: 17px; border-radius: 50%; background: rgba(255,255,255,.98); z-index: 4; }
-    .hl2 { position: absolute; bottom: 12px; right: 12px; width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.75); z-index: 4; }
-    /* 闭眼弧线（睡觉/眯眼时显示） */
-    .eyelid {
-      display: none; position: absolute; left: 50%; top: 46%; transform: translateX(-50%);
-      width: 38px; height: 18px; border-bottom: 4px solid #6b4a2e; border-radius: 0 0 40px 40px;
-    }
+    /* 开心态：尾巴摆动更欢快 */
+    .cat.mood-happy .cat-tail { animation-duration: .85s; }
 
-    /* 腮红（眼睛下方两个粉色小圆圈，增加萌感） */
-    .blush {
-      position: absolute; z-index: 3; top: 110px;
-      width: 32px; height: 19px; border-radius: 50%;
-      background: radial-gradient(ellipse at center, rgba(255,126,158,.72) 0%, rgba(255,126,158,.15) 78%);
-    }
-    .blush.l { left: 22px; }
-    .blush.r { right: 22px; }
+    /* ZZZ 睡觉标识上浮 */
+    .cat-zzz text { transform-box: fill-box; animation: zzzFloat 2s ease-in-out infinite; }
+    .cat-zzz text:nth-of-type(2) { animation-delay: .3s; }
+    .cat-zzz text:nth-of-type(3) { animation-delay: .6s; }
+    @keyframes zzzFloat { 0%,100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-5px); } }
 
-    /* 鼻子（粉色小三角） */
-    .nose {
-      position: absolute; z-index: 3; top: 112px; left: 50%; transform: translateX(-50%);
-      width: 0; height: 0;
-      border-left: 9px solid transparent; border-right: 9px solid transparent;
-      border-top: 9px solid #FF8FAB;
-    }
-    /* 嘴（柔和 W 形微笑，随表情变化） */
-    .mouth { position: absolute; z-index: 3; top: 124px; left: 50%; transform: translateX(-50%); width: 44px; height: 16px; }
-    .mouth::before, .mouth::after {
-      content: ""; position: absolute; top: 0; width: 22px; height: 14px;
-      border: 2.5px solid #8a5a30; border-top: 0; border-radius: 0 0 24px 24px;
-      transition: all .3s;
-    }
-    .mouth::before { left: 0; }
-    .mouth::after { right: 0; }
-
-    /* 胡须（左右各三根，纤细柔和） */
-    .whiskers { position: absolute; z-index: 2; top: 98px; width: 60px; height: 46px; }
-    .whiskers.l { left: -32px; }
-    .whiskers.r { right: -32px; }
-    .whiskers span { position: absolute; width: 52px; height: 1.5px; background: rgba(150,100,55,.38); border-radius: 2px; }
-    .whiskers.l span { left: 0; transform-origin: right center; }
-    .whiskers.r span { right: 0; transform-origin: left center; }
-    .whiskers.l span:nth-child(1) { top: 4px;  transform: rotate(-12deg); }
-    .whiskers.l span:nth-child(2) { top: 20px; transform: rotate(-2deg); }
-    .whiskers.l span:nth-child(3) { top: 36px; transform: rotate(9deg); }
-    .whiskers.r span:nth-child(1) { top: 4px;  transform: rotate(12deg); }
-    .whiskers.r span:nth-child(2) { top: 20px; transform: rotate(2deg); }
-    .whiskers.r span:nth-child(3) { top: 36px; transform: rotate(-9deg); }
-
-    /* 项圈 + 金色铃铛 */
-    .collar {
-      position: absolute; z-index: 5; top: 162px; left: 50%; transform: translateX(-50%);
-      width: 120px; height: 15px; background: linear-gradient(#EC4B39, #C22E1E);
-      border-radius: 8px;
-    }
-    .bell {
-      position: absolute; z-index: 6; top: 170px; left: 50%; transform: translateX(-50%);
-      width: 26px; height: 26px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #ffe680, #f5a623 65%, #d98600);
-      box-shadow: 0 2px 5px rgba(0,0,0,.25);
-    }
-    .bell::before { content: ""; position: absolute; left: 50%; top: 6px; transform: translateX(-50%); width: 2px; height: 14px; background: #a9740b; }
-    .bell::after  { content: ""; position: absolute; left: 50%; top: 14px; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: #a9740b; }
-
-    /* ZZZ 睡觉标识 */
-    .zzz { display: none; position: absolute; z-index: 7; top: 20px; right: 6px; color: #7a5a2a; font-weight: 800; font-size: 20px; }
-    .zzz span { display: inline-block; animation: zzzFloat 2s ease-in-out infinite; }
-    .zzz span:nth-child(2) { font-size: 16px; animation-delay: .3s; }
-    .zzz span:nth-child(3) { font-size: 12px; animation-delay: .6s; }
-    @keyframes zzzFloat { 0%,100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(-6px); opacity: 1; } }
-
-    /* ---------- 表情：开心 ---------- */
-    .cat.mood-happy .pupil { transform: translate(-50%,-50%) scale(1.28); }
-    .cat.mood-happy .tail { animation-duration: .8s; }
-    .cat.mood-happy .mouth::before, .cat.mood-happy .mouth::after {
-      height: 18px; border-width: 3px; border-radius: 0 0 22px 22px;
-    }
-    /* ---------- 表情：难过（眯眼、皱眉、耳朵下垂） ---------- */
-    .cat.mood-sad .eye { transform: scaleY(.5); }
-    .cat.mood-sad .ear.l { transform: rotate(-4deg); }
-    .cat.mood-sad .ear.r { transform: rotate(4deg); }
-    .cat.mood-sad .mouth::before, .cat.mood-sad .mouth::after {
-      border-top: 2px solid #6b4a2e; border-bottom: 0; border-radius: 20px 20px 0 0; top: 6px;
-    }
-    /* ---------- 表情：睡觉（闭眼、ZZZ、呼吸） ---------- */
-    .cat.mood-sleep .eye { background: transparent; box-shadow: none; overflow: visible; }
-    .cat.mood-sleep .iris, .cat.mood-sleep .pupil, .cat.mood-sleep .hl, .cat.mood-sleep .hl2 { opacity: 0; }
-    .cat.mood-sleep .eyelid { display: block; }
-    .cat.mood-sleep .zzz { display: block; }
-    .cat.mood-sleep .mouth { width: 16px; opacity: .6; }
-    .cat.mood-sleep .body { animation: breathe 3.2s ease-in-out infinite; }
-    @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.035); } }
-
-    /* ---------- 操作动画 ---------- */
+    /* ---------- 操作动画（作用于整只猫或头部） ---------- */
     .cat.anim-jump { animation: catJump .6s ease; }
     @keyframes catJump { 0%,100% { transform: translateY(0); } 30% { transform: translateY(-28px); } 55% { transform: translateY(-6px); } 75% { transform: translateY(-16px); } }
-    .cat.anim-eat .head { animation: eatBob .45s ease 2; }
-    @keyframes eatBob { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(12px) rotate(-2deg); } }
-    .cat.anim-nuzzle .head { animation: nuzzle .6s ease; }
-    @keyframes nuzzle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-9deg); } 75% { transform: rotate(9deg); } }
+    .cat.anim-eat .cat-head { animation: eatBob .45s ease 2; }
+    @keyframes eatBob { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(9px) rotate(-2deg); } }
+    .cat.anim-nuzzle .cat-head { animation: nuzzle .6s ease; }
+    @keyframes nuzzle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
     .cat.anim-shake { animation: catShake .5s ease; }
     @keyframes catShake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-8px) rotate(-3deg); } 40% { transform: translateX(8px) rotate(3deg); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
 
@@ -529,32 +356,148 @@
       <div class="bed"></div>
       <div class="speech" id="speech">喵呜~</div>
       <div class="cat-scale" id="catScale">
-        <!-- 纯 CSS 橘猫 -->
+        <!-- 内联 SVG 卡通橘猫 -->
         <div class="cat mood-normal" id="cat">
-          <div class="tail"></div>
-          <div class="body">
-            <div class="bstripe b1"></div><div class="bstripe b2"></div>
-            <div class="bstripe b3"></div><div class="bstripe b4"></div>
-            <div class="belly"></div>
-          </div>
-          <div class="leg l"></div>
-          <div class="leg r"></div>
-          <div class="head">
-            <div class="ear l"><div class="ear-inner"></div></div>
-            <div class="ear r"><div class="ear-inner"></div></div>
-            <div class="hstripe h1"></div><div class="hstripe h2"></div><div class="hstripe h3"></div>
-            <div class="eye l"><div class="iris"><div class="pupil"></div></div><div class="hl"></div><div class="hl2"></div><div class="eyelid"></div></div>
-            <div class="eye r"><div class="iris"><div class="pupil"></div></div><div class="hl"></div><div class="hl2"></div><div class="eyelid"></div></div>
-            <div class="whiskers l"><span></span><span></span><span></span></div>
-            <div class="whiskers r"><span></span><span></span><span></span></div>
-            <div class="blush l"></div>
-            <div class="blush r"></div>
-            <div class="nose"></div>
-            <div class="mouth"></div>
-            <div class="zzz"><span>Z</span><span>Z</span><span>Z</span></div>
-          </div>
-          <div class="collar"></div>
-          <div class="bell"></div>
+          <svg class="cat-svg" viewBox="0 0 220 250" xmlns="http://www.w3.org/2000/svg" aria-label="卡通橘猫">
+            <defs>
+              <linearGradient id="furGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FFDD93"/>
+                <stop offset="0.55" stop-color="#FF9E2C"/>
+                <stop offset="1" stop-color="#FF820C"/>
+              </linearGradient>
+              <linearGradient id="bellyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FFF8EE"/>
+                <stop offset="1" stop-color="#FFE4C6"/>
+              </linearGradient>
+              <radialGradient id="bellGrad" cx="0.35" cy="0.3" r="0.85">
+                <stop offset="0" stop-color="#FFE680"/>
+                <stop offset="0.65" stop-color="#F5A623"/>
+                <stop offset="1" stop-color="#D98600"/>
+              </radialGradient>
+            </defs>
+
+            <!-- 尾巴（蓬松卷曲，摆动） -->
+            <g class="cat-tail">
+              <path d="M168,208 C214,202 214,148 187,137 C170,130 158,148 172,160"
+                    fill="none" stroke="url(#furGrad)" stroke-width="27" stroke-linecap="round"/>
+              <path d="M187,150 C195,151 199,160 195,168" fill="none" stroke="#E67912"
+                    stroke-width="7" stroke-linecap="round" opacity=".5"/>
+            </g>
+
+            <!-- 身体 -->
+            <g class="cat-body">
+              <!-- 后腿（两侧，藏在身体后） -->
+              <ellipse cx="58" cy="226" rx="14" ry="17" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2"/>
+              <ellipse cx="162" cy="226" rx="14" ry="17" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2"/>
+              <!-- 身体主体 -->
+              <ellipse cx="110" cy="197" rx="61" ry="47" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2"/>
+              <!-- 背部条纹 -->
+              <path d="M150,170 q11,4 13,13" fill="none" stroke="#E67912" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+              <path d="M156,185 q11,3 12,11" fill="none" stroke="#E67912" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+              <path d="M70,170 q-11,4 -13,13" fill="none" stroke="#E67912" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+              <!-- 白肚皮 -->
+              <ellipse cx="110" cy="206" rx="34" ry="35" fill="url(#bellyGrad)"/>
+              <!-- 前爪（粗短） -->
+              <ellipse cx="88" cy="236" rx="19" ry="13" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2"/>
+              <ellipse cx="132" cy="236" rx="19" ry="13" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2"/>
+              <ellipse cx="88" cy="238" rx="10" ry="7" fill="#FFF3E2"/>
+              <ellipse cx="132" cy="238" rx="10" ry="7" fill="#FFF3E2"/>
+            </g>
+
+            <!-- 头部 + 表情（吃 / 蹭动画作用对象） -->
+            <g class="cat-head">
+              <!-- 耳朵（小三角，内耳粉色） -->
+              <path d="M58,54 L80,10 L106,50 Z" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M162,54 L140,10 L114,50 Z" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M70,48 L81,23 L95,46 Z" fill="#FF9DB6"/>
+              <path d="M150,48 L139,23 L125,46 Z" fill="#FF9DB6"/>
+
+              <!-- 大圆头 -->
+              <circle cx="110" cy="92" r="70" fill="url(#furGrad)" stroke="#EE7A12" stroke-width="2"/>
+
+              <!-- 额头 M 纹（深橘条纹） -->
+              <path d="M110,33 L110,57" stroke="#E67912" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+              <path d="M94,37 L88,59" stroke="#E67912" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+              <path d="M126,37 L132,59" stroke="#E67912" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+
+              <!-- 腮红 -->
+              <ellipse cx="72" cy="112" rx="12" ry="7.5" fill="#FF8CA8" opacity=".55"/>
+              <ellipse cx="148" cy="112" rx="12" ry="7.5" fill="#FF8CA8" opacity=".55"/>
+
+              <!-- 胡须（左右各三根） -->
+              <g stroke="#9A6A3C" stroke-width="1.6" stroke-linecap="round" opacity=".6" fill="none">
+                <path d="M60,104 L24,98"/>
+                <path d="M60,112 L22,112"/>
+                <path d="M60,120 L24,126"/>
+                <path d="M160,104 L196,98"/>
+                <path d="M160,112 L198,112"/>
+                <path d="M160,120 L196,126"/>
+              </g>
+
+              <!-- 眼睛：正常（超大圆眼 + 高光，含眨眼动画） -->
+              <g id="eyesOpen" class="eyes-open">
+                <circle cx="86" cy="98" r="18" fill="#fff"/>
+                <circle cx="134" cy="98" r="18" fill="#fff"/>
+                <circle cx="86" cy="99" r="14" fill="#3A2A18"/>
+                <circle cx="134" cy="99" r="14" fill="#3A2A18"/>
+                <circle cx="82" cy="94" r="5" fill="#fff"/>
+                <circle cx="130" cy="94" r="5" fill="#fff"/>
+                <circle cx="90" cy="104" r="2.4" fill="#fff" opacity=".85"/>
+                <circle cx="138" cy="104" r="2.4" fill="#fff" opacity=".85"/>
+              </g>
+              <!-- 眼睛：开心（月牙形） -->
+              <g id="eyesHappy" style="display:none">
+                <path d="M72,102 Q86,86 100,102" fill="none" stroke="#3A2A18" stroke-width="5" stroke-linecap="round"/>
+                <path d="M120,102 Q134,86 148,102" fill="none" stroke="#3A2A18" stroke-width="5" stroke-linecap="round"/>
+              </g>
+              <!-- 眼睛：难过（半闭 + 泪滴 + 八字眉） -->
+              <g id="eyesSad" style="display:none">
+                <ellipse cx="86" cy="103" rx="13" ry="9" fill="#fff"/>
+                <ellipse cx="134" cy="103" rx="13" ry="9" fill="#fff"/>
+                <circle cx="86" cy="106" r="7" fill="#3A2A18"/>
+                <circle cx="134" cy="106" r="7" fill="#3A2A18"/>
+                <path d="M70,88 Q80,84 92,90" fill="none" stroke="#8A5A2A" stroke-width="3" stroke-linecap="round"/>
+                <path d="M150,88 Q140,84 128,90" fill="none" stroke="#8A5A2A" stroke-width="3" stroke-linecap="round"/>
+                <path d="M79,113 q-6,8 -1,15 q6,-3 1,-15" fill="#7FB6FF"/>
+              </g>
+              <!-- 眼睛：睡觉（闭眼弧线） -->
+              <g id="eyesSleep" style="display:none">
+                <path d="M72,100 Q86,111 100,100" fill="none" stroke="#6B4A2E" stroke-width="4" stroke-linecap="round"/>
+                <path d="M120,100 Q134,111 148,100" fill="none" stroke="#6B4A2E" stroke-width="4" stroke-linecap="round"/>
+              </g>
+
+              <!-- 鼻子（粉色小三角） -->
+              <path d="M104,116 L116,116 L110,123 Z" fill="#FF7DA0"/>
+
+              <!-- 嘴：正常 W 形 -->
+              <g id="mouthNormal">
+                <path d="M110,123 Q104,132 98,127" fill="none" stroke="#7A4A22" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M110,123 Q116,132 122,127" fill="none" stroke="#7A4A22" stroke-width="2.6" stroke-linecap="round"/>
+              </g>
+              <!-- 嘴：开心（大笑） -->
+              <g id="mouthHappy" style="display:none">
+                <path d="M97,124 Q110,145 123,124 Z" fill="#C0405A"/>
+                <path d="M101,127 Q110,136 119,127 Z" fill="#FF9DB6"/>
+              </g>
+              <!-- 嘴：难过（倒 W） -->
+              <g id="mouthSad" style="display:none">
+                <path d="M100,131 Q110,123 120,131" fill="none" stroke="#7A4A22" stroke-width="2.6" stroke-linecap="round"/>
+              </g>
+
+              <!-- 项圈 + 金色铃铛 -->
+              <path d="M64,150 Q110,177 156,150" fill="none" stroke="#E8483A" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="110" cy="167" r="10" fill="url(#bellGrad)" stroke="#C77F0A" stroke-width="1"/>
+              <line x1="110" y1="161" x2="110" y2="171" stroke="#A9740B" stroke-width="1.6"/>
+              <circle cx="110" cy="171" r="2.4" fill="#A9740B"/>
+            </g>
+
+            <!-- ZZZ 睡觉标识 -->
+            <g id="zzz" class="cat-zzz" style="display:none" fill="#7A5A2A" font-weight="800" font-family="Arial, sans-serif">
+              <text x="150" y="48" font-size="16">Z</text>
+              <text x="165" y="34" font-size="12">z</text>
+              <text x="177" y="24" font-size="9">z</text>
+            </g>
+          </svg>
         </div>
       </div>
     </section>
@@ -730,6 +673,7 @@
       // 表情
       cat.classList.remove('mood-happy', 'mood-normal', 'mood-sad', 'mood-sleep');
       cat.classList.add('mood-' + s.mood);
+      setCatFace(s.mood);
       // 气泡默认叫声
       if (!speakTimer) $('speech').textContent = s.sleeping ? 'Zzz…' : '喵呜~';
       // 喂食按钮图标随阶段变化
@@ -741,6 +685,24 @@
       showOfflineHint();
       // 记录
       renderRecords(s.records);
+    }
+
+    /* 通过 JS 控制 SVG 内部元素的显示/隐藏，切换猫咪表情 */
+    function setCatFace(mood) {
+      const FACES = {
+        normal: { eyes: 'eyesOpen',  mouth: 'mouthNormal' },
+        happy:  { eyes: 'eyesHappy', mouth: 'mouthHappy'  },
+        sad:    { eyes: 'eyesSad',   mouth: 'mouthSad'    },
+        sleep:  { eyes: 'eyesSleep', mouth: 'mouthNormal' }
+      };
+      const f = FACES[mood] || FACES.normal;
+      ['eyesOpen', 'eyesHappy', 'eyesSad', 'eyesSleep'].forEach(id => {
+        const el = $(id); if (el) el.style.display = (id === f.eyes) ? '' : 'none';
+      });
+      ['mouthNormal', 'mouthHappy', 'mouthSad'].forEach(id => {
+        const el = $(id); if (el) el.style.display = (id === f.mouth) ? '' : 'none';
+      });
+      const z = $('zzz'); if (z) z.style.display = (mood === 'sleep') ? '' : 'none';
     }
 
     let lastOnline = { A: false, B: false };
